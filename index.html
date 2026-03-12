@@ -16,7 +16,7 @@ text-align:center;
 overflow-x:hidden;
 }
 
-/* Curtain Section */
+/* CURTAIN */
 
 #curtain-container{
 position:fixed;
@@ -26,14 +26,24 @@ display:flex;
 justify-content:center;
 align-items:center;
 z-index:10;
+background:#300;
 }
 
 .curtain{
 position:absolute;
 width:50%;
 height:100%;
-background:#a8002a;
-transition:2s;
+background:
+linear-gradient(
+90deg,
+#7a001e 0%,
+#a8002a 20%,
+#7a001e 40%,
+#a8002a 60%,
+#7a001e 80%
+);
+box-shadow:inset -10px 0 30px rgba(0,0,0,0.5);
+transition:2.5s ease;
 }
 
 .left{
@@ -47,16 +57,16 @@ right:0;
 #openBtn{
 position:relative;
 z-index:20;
-padding:15px 35px;
+padding:16px 40px;
 font-size:20px;
 background:white;
 border:none;
 border-radius:30px;
 cursor:pointer;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
+box-shadow:0 8px 20px rgba(0,0,0,0.25);
 }
 
-/* After opening */
+/* Curtain open animation */
 
 .open .left{
 transform:translateX(-100%);
@@ -66,15 +76,18 @@ transform:translateX(-100%);
 transform:translateX(100%);
 }
 
+
+/* Sections */
+
 section{
-padding:100px 20px;
+padding:120px 20px;
 }
 
-/* Couple title */
+/* Couple names */
 
 .couple{
 font-family:'Great Vibes';
-font-size:60px;
+font-size:65px;
 color:#c2185b;
 }
 
@@ -90,12 +103,35 @@ display:flex;
 justify-content:center;
 gap:40px;
 flex-wrap:wrap;
-margin-top:50px;
+margin-top:60px;
+}
+
+.card{
+position:relative;
+width:200px;
+height:120px;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 10px 20px rgba(0,0,0,0.25);
+}
+
+.reveal{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+font-weight:500;
+color:#a8002a;
+background:white;
 }
 
 canvas{
-border-radius:15px;
-box-shadow:0 10px 20px rgba(0,0,0,0.2);
+position:absolute;
+top:0;
+left:0;
 }
 
 /* Location */
@@ -117,21 +153,21 @@ color:#444;
 </head>
 
 
-<body>
 
+<body>
 
 <div id="curtain-container">
 
 <div class="curtain left"></div>
 <div class="curtain right"></div>
 
-<button id="openBtn">Click to Open Invitation ❤</button>
+<button id="openBtn">Open Invitation ❤</button>
 
 </div>
 
 
 
-<section id="hero">
+<section>
 
 <div class="couple">Aashoohh & Ajoooohh</div>
 
@@ -149,9 +185,20 @@ are getting married
 
 <div class="scratch-container">
 
-<canvas id="scratch1" width="200" height="120"></canvas>
-<canvas id="scratch2" width="200" height="120"></canvas>
-<canvas id="scratch3" width="200" height="120"></canvas>
+<div class="card">
+<div class="reveal">Saturday</div>
+<canvas width="200" height="120"></canvas>
+</div>
+
+<div class="card">
+<div class="reveal">December 26</div>
+<canvas width="200" height="120"></canvas>
+</div>
+
+<div class="card">
+<div class="reveal">2026</div>
+<canvas width="200" height="120"></canvas>
+</div>
 
 </div>
 
@@ -182,10 +229,9 @@ We cordially invite you to celebrate our wedding.
 
 
 
-
 <script>
 
-// Curtain open
+/* Curtain open */
 
 document.getElementById("openBtn").onclick = function(){
 
@@ -193,22 +239,22 @@ document.body.classList.add("open");
 
 setTimeout(()=>{
 document.getElementById("curtain-container").style.display="none";
-},2000);
+},2500);
 
 }
 
 
 
+/* Scratch cards */
 
-function createScratch(canvasId,text){
+document.querySelectorAll("canvas").forEach(canvas=>{
 
-let canvas=document.getElementById(canvasId);
 let ctx=canvas.getContext("2d");
 
 ctx.fillStyle="#c2185b";
 ctx.fillRect(0,0,canvas.width,canvas.height);
 
-ctx.font="25px Poppins";
+ctx.font="20px Poppins";
 ctx.fillStyle="white";
 ctx.textAlign="center";
 ctx.fillText("Scratch Here",100,65);
@@ -225,28 +271,14 @@ let x=e.clientX-rect.left;
 let y=e.clientY-rect.top;
 
 ctx.beginPath();
-ctx.arc(x,y,15,0,Math.PI*2);
+ctx.arc(x,y,18,0,Math.PI*2);
 ctx.fill();
 
 }
 
 });
 
-let reveal=document.createElement("div");
-reveal.innerHTML=text;
-reveal.style.fontSize="28px";
-reveal.style.marginTop="-90px";
-reveal.style.pointerEvents="none";
-
-canvas.parentElement.appendChild(reveal);
-
-}
-
-
-
-createScratch("scratch1","Saturday");
-createScratch("scratch2","December 26");
-createScratch("scratch3","2026");
+});
 
 </script>
 
